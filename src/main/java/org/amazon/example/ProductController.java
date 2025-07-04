@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@GetMapping("/api/products")
 public class ProductController {
     @Autowired
     ProductService productService;
