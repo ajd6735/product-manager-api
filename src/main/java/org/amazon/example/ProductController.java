@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/products")
 public class ProductController {
     @Autowired
-    ProductService productService;
+    private ProductService productService;
 
     @GetMapping
     public List<Product> getAllProducts() {

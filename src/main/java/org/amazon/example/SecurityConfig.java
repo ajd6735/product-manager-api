@@ -25,7 +25,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/register", "/login").permitAll()  // Allow public access to these pages
                 .requestMatchers("/admin/**").hasRole("ADMIN")        // Only ADMIN can access /admin/*
-                .requestMatchers("/user/**").hasRole("USER")          // Only USER can access /user/*
+                .requestMatchers("/user/**").hasRole("USER")
+                .requestMatchers("/products/**").authenticated()// Only USER can access /user/*
                 .anyRequest().authenticated()                         // Secure other endpoints
                 .and()
                 .formLogin()
