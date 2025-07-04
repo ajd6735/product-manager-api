@@ -25,10 +25,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/register", "/login").permitAll()  // Allow public access to these pages
                 .requestMatchers("/admin/**").hasRole("ADMIN")        // Only ADMIN can access /admin/*
-                .requestMatchers("/user/**").hasRole("USER")
-                .requestMatchers("/products/**").authenticated()// Only USER can access /user/*
-                .anyRequest().authenticated()                         // Secure other endpoints
+                .requestMatchers("/user/**").hasRole("USER")          // Only USER can access /user/*
+                .anyRequest().authenticated()
                 .and()
+                // Configure Basic Authentication for the API endpoints (like /products)
+                .httpBasic()
+                .and()
+                // Disable form login for API endpoints to avoid redirection
+                .csrf().disable()
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/welcome", true)
