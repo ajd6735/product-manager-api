@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
@@ -14,35 +13,29 @@ public class ProductController {
 
     @GetMapping
     public List<Product> getAllProducts() {
-        return productService.findAll();
+        return productService.getAllProducts();
+    }
+
+
+    @PostMapping
+    public Product addProduct(@RequestBody Product product){
+        return productService.addProduct(product);
     }
 
     @GetMapping("/{id}")
-    public Optional<Product> getProductById(@PathVariable int id){
-        return productService.findById(id);
+    public Product getProductById(@PathVariable Long id){
+        return productService.getProductById(id);
     }
 
-    @PostMapping
-    public Product createProduct(@RequestBody Product product){
-        return productService.save(product);
-    }
 
-    @PutMapping("/{Id}")
-    public Product updateProduct(@PathVariable int id, @RequestBody Product updatedProduct){
-        Optional<Product> optionalProduct = productService.findById(id);
-        if(optionalProduct.isPresent()){
-            Product product = optionalProduct.get();
-            product.setName(updatedProduct.getName());
-            product.setPrice(updatedProduct.getPrice());
-            return productService.save(product);
-        } else{
-            throw new RuntimeException("Product not found with ID" + id);
-        }
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable Long id, @RequestBody Product updatedProduct){
+        return productService.updateProduct(id, updatedProduct);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable int id){
-        productService.deleteById(id);
+    public void deleteProduct(@PathVariable Long id){
+        productService.deleteProduct(id);
     }
 
 }
